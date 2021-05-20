@@ -141,7 +141,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/readBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
@@ -152,7 +152,7 @@
                     android:textAllCaps="false" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/infoBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"

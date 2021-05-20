@@ -53,27 +53,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/searchBar"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/search_bar"
-        android:drawableStart="@drawable/search"
-        android:drawablePadding="8dp"
-        android:ems="10"
-        android:fontFamily="@font/noto_sans"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text="Search here..."
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/searchEt"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/search_bar"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:fontFamily="@font/noto_sans"
+            android:hint="Search here..."
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/searchBtn"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="80dp"
+            android:layout_weight="1"
+            android:backgroundTint="#CF9F8A"
+            app:srcCompat="@drawable/search" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="150dp"
@@ -86,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        app:itemBackground="#FFFFFF"
+        app:itemBackground="@color/white"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:layout_constraintBottom_toBottomOf="parent"
