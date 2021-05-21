@@ -80,14 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
                         String bookTitle = volumeObj.optString("title");
                         JSONArray authorsList = volumeObj.getJSONArray("authors");
-                        Log.d("authorsList", String.valueOf(authorsList));
                         String bookDesc = volumeObj.optString("description");
                         String bookPublisher = volumeObj.optString("publisher");
                         String publishDate = volumeObj.optString("publishedDate");
 
                         JSONObject imageLinks = volumeObj.optJSONObject("imageLinks");
                         String cover = imageLinks.optString("thumbnail");
-                        Log.d("Cover", cover);
                         String previewLink = volumeObj.optString("previewLink");
                         String infoLink = volumeObj.optString("infoLink");
 
@@ -101,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                 authors.add(authorsList.optString(i));
                             }
                         }
+                        Log.d("authorsList", String.valueOf(authors));
                         // after extracting all the data, save in Book class.
                         Book books = new Book(cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
                         bookList.add(books);

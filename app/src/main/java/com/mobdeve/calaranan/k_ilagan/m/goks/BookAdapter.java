@@ -30,14 +30,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         public TextView bookTitle, bookAuthor, bookPublisher, publishDate;
         public ImageView bookCover;
 
-        public BookViewHolder(View itemView) { // book desc
+        public BookViewHolder(View itemView) {
             super(itemView);
             bookCover = itemView.findViewById(R.id.picture);
             bookTitle = itemView.findViewById(R.id.title);
             bookAuthor = itemView.findViewById(R.id.author);
             bookPublisher = itemView.findViewById(R.id.publisher);
             publishDate = itemView.findViewById(R.id.date);
-
         }
     }
 
@@ -52,10 +51,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         Book book = bookList.get(position);
-        Log.d("thumbnnail adapter", book.getBookCover());
-        Picasso.get().load(book.getBookCover()).into(holder.bookCover); // loading image from URL
+        String bookURL;
+        bookURL = book.getBookCover().replace("http:", "https:");
+        Picasso.get().load(bookURL).resize(80, 100).into(holder.bookCover); // loading image from URL
         holder.bookTitle.setText(book.getBookTitle());
-        holder.bookAuthor.setText(book.getAuthors().toString());
+        String authors ="";
+        for(String string: book.getAuthors()){
+            authors += authors + string;
+        }
+        holder.bookAuthor.setText(authors);
         holder.bookPublisher.setText(book.getBookPublisher());
         holder.publishDate.setText(book.getPublishDate());
 
@@ -71,8 +75,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 i.putExtra("publishDate", book.getPublishDate());
 
                 i.putExtra("preview", book.getPreviewLink());
-                //i.putExtra("info", book.getInfoLink());
-                i.putExtra("buy", book.getBuyLink());
+                i.putExtra("info", book.getInfoLink());
+                //i.putExtra("buy", book.getBuyLink());
 
                 Log.d("authors", String.valueOf(book.getAuthors()));
                 activity.startActivity(i);

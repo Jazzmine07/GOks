@@ -42,7 +42,7 @@ public class BookDetails extends AppCompatActivity {
         this.bookTitle = findViewById(R.id.bookTitle);
         this.bookAuthor = findViewById(R.id.bookAuthor);
         this.bookDesc = findViewById(R.id.bookDesc);
-        this.readBtn = findViewById(R.id.readBtn);
+        this.readBtn = findViewById(R.id.previewBtn);
         this.buyBtn = findViewById(R.id.infoBtn);
 
         Intent intent = getIntent();

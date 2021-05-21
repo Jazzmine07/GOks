@@ -43,7 +43,7 @@
                     android:maxLines="1"
                     android:text="Book Title"
                     android:textColor="@color/light_brown"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
