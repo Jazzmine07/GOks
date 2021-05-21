@@ -90,8 +90,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainRv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="150dp"
+        android:layout_height="520dp"
+        android:layout_marginTop="149dp"
         android:background="#CF9F8A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

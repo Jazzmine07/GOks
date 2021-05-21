@@ -24,6 +24,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public BookAdapter(ArrayList<Book> bList, Context context){   // getting bookList to the adapter (constructor)
         bookList = bList;
         activity = context;
+        Log.d("activity adapter", String.valueOf(activity));
     }
 
     public class BookViewHolder extends RecyclerView.ViewHolder {
@@ -54,11 +55,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         String bookURL;
         bookURL = book.getBookCover().replace("http:", "https:");
         Picasso.get().load(bookURL).resize(80, 100).into(holder.bookCover); // loading image from URL
+
         holder.bookTitle.setText(book.getBookTitle());
-        String authors ="";
-        for(String string: book.getAuthors()){
-            authors += authors + string;
-        }
+        String authors = book.getAuthors().toString();
+        authors = authors.substring(1, authors.length() - 1);   // removing [ ] from the author display
+        Log.d("authors adapter", authors);
         holder.bookAuthor.setText(authors);
         holder.bookPublisher.setText(book.getBookPublisher());
         holder.publishDate.setText(book.getPublishDate());

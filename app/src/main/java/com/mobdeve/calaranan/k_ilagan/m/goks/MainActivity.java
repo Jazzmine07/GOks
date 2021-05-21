@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         reqQueue = Volley.newRequestQueue(MainActivity.this);
         reqQueue.getCache().clear();    // clear cache
 
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + query;
+        String url = "https://www.googleapis.com/books/v1/volumes?q=" + query +"&maxResults=20";
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
 
         JsonObjectRequest booksObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
                         if (authorsList.length() != 0) {
                             for (j = 0; j < authorsList.length(); j++) {
-                                authors.add(authorsList.optString(i));
+                                authors.add(authorsList.optString(j));
                             }
                         }
-                        Log.d("authorsList", String.valueOf(authors));
+                        Log.d("authors", String.valueOf(authors));
                         // after extracting all the data, save in Book class.
                         Book books = new Book(cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
                         bookList.add(books);
@@ -122,16 +122,4 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(booksObjReq);
     }
-
-//    @Override
-//    public void bookOnClick(String title, ArrayList<String> authors, String publisher, String publishDate, String cover) {
-//        Intent i = new Intent(MainActivity.this, BookDetails.class);
-//        i.putExtra("title", title);
-//        i.putExtra("authors", authors);
-//        i.putExtra("publisher", publisher);
-//        i.putExtra("publishDate", publishDate);
-//        i.putExtra("cover", cover);
-//        Log.d("authors", String.valueOf(authors));
-//        startActivity(i);
-//    }
 }
