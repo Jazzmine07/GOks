@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -19,26 +21,40 @@ import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     public ArrayList<Book> bookList;
-    Context activity;
+    public Context activity;
+    //public viewDetailsListener onClickViewDetailsListener;
 
     public BookAdapter(ArrayList<Book> bList, Context context){   // getting bookList to the adapter (constructor)
-        bookList = bList;
-        activity = context;
-        Log.d("activity adapter", String.valueOf(activity));
+        this.bookList = bList;
+        this.activity = context;
     }
 
+//    public BookAdapter(ArrayList<Book> bList, viewDetailsListener viewDetailsListener){   // getting bookList to the adapter (constructor)
+//        this.bookList = bList;
+//        this.onClickViewDetailsListener = viewDetailsListener;
+//    }
+
     public class BookViewHolder extends RecyclerView.ViewHolder {
+        //public CardView bookLayout;
+        public LinearLayout bookLayout;
         public TextView bookTitle, bookAuthor, bookPublisher, publishDate;
         public ImageView bookCover;
+        //viewDetailsListener viewDetails;
 
         public BookViewHolder(View itemView) {
             super(itemView);
+            bookLayout = itemView.findViewById(R.id.bookLayout);
             bookCover = itemView.findViewById(R.id.picture);
             bookTitle = itemView.findViewById(R.id.title);
             bookAuthor = itemView.findViewById(R.id.author);
             bookPublisher = itemView.findViewById(R.id.publisher);
             publishDate = itemView.findViewById(R.id.date);
         }
+
+//        @Override
+//        public void onClick(View v) {
+//            viewDetails.viewDetailsClick(getAdapterPosition());
+//        }
     }
 
     @NonNull
@@ -52,6 +68,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         Book book = bookList.get(position);
+
         String bookURL;
         bookURL = book.getBookCover().replace("http:", "https:");
         Picasso.get().load(bookURL).resize(80, 100).into(holder.bookCover); // loading image from URL
@@ -59,16 +76,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.bookTitle.setText(book.getBookTitle());
         String authors = book.getAuthors().toString();
         authors = authors.substring(1, authors.length() - 1);   // removing [ ] from the author display
-        Log.d("authors adapter", authors);
         holder.bookAuthor.setText(authors);
         holder.bookPublisher.setText(book.getBookPublisher());
         holder.publishDate.setText(book.getPublishDate());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.bookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, BookDetails.class);
-                i.putExtra("cover", book.getBookCover());
+                Intent i = new Intent(activity, ViewBookActivity.class);
+                i.putExtra("cover", bookURL);
                 i.putExtra("title", book.getBookTitle());
                 i.putExtra("authors", book.getAuthors());
                 i.putExtra("desc", book.getBookDesc());
@@ -78,8 +94,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 i.putExtra("preview", book.getPreviewLink());
                 i.putExtra("info", book.getInfoLink());
                 //i.putExtra("buy", book.getBuyLink());
-
-                Log.d("authors", String.valueOf(book.getAuthors()));
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.startActivity(i);
             }
         });
@@ -89,4 +104,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public int getItemCount() {
         return bookList.size();
     }
+
+//    public interface viewDetailsListener {
+//        void viewDetailsClick(int position);
+//    }
 }

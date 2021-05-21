@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +28,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public ArrayList<Book> bookList;
     public RecyclerView mainRv;
-    public RecyclerView.Adapter recyclerViewAdapter;
-    public RecyclerView.LayoutManager layoutManager;
+    //public BookAdapter adapter;
+    //public RecyclerView.LayoutManager layoutManager;
     public RequestQueue reqQueue;
 
     public EditText searchEt;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         this.mainRv = findViewById(R.id.mainRv);
         this.searchEt = findViewById(R.id.searchEt);
         this.searchBtn = findViewById(R.id.searchBtn);
+
+        bookList = new ArrayList<>();
     }
 
     @Override
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         reqQueue = Volley.newRequestQueue(MainActivity.this);
         reqQueue.getCache().clear();    // clear cache
 
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + query +"&maxResults=20";
+        String url = "https://www.googleapis.com/books/v1/volumes?q=" + query + "&maxResults=20";
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
 
         JsonObjectRequest booksObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -99,15 +102,21 @@ public class MainActivity extends AppCompatActivity {
                                 authors.add(authorsList.optString(j));
                             }
                         }
-                        Log.d("authors", String.valueOf(authors));
+                        //Log.d("authors", String.valueOf(authors));
                         // after extracting all the data, save in Book class.
                         Book books = new Book(cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
                         bookList.add(books);
-                        layoutManager = new LinearLayoutManager(MainActivity.this);
-                        recyclerViewAdapter = new BookAdapter(bookList, MainActivity.this);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                        BookAdapter adapter = new BookAdapter(bookList, MainActivity.this);
                         mainRv.setLayoutManager(layoutManager);
-                        mainRv.setAdapter(recyclerViewAdapter);
+                        mainRv.setAdapter(adapter);
+
+//                        layoutManager = new LinearLayoutManager(MainActivity.this);
+//                        adapter = new BookAdapter(bookList, this);
+//                        mainRv.setLayoutManager(layoutManager);
+//                        mainRv.setAdapter(adapter);
                     }
+                    //recyclerViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     // displaying a toast message when we get any error from API
@@ -122,4 +131,21 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(booksObjReq);
     }
+
+//    @Override
+//    public void viewDetailsClick(int position) {
+//        Book bList = bookList.get(position);
+//
+//        Intent i = new Intent(MainActivity.this, BookDetails.class);
+//        i.putExtra("cover", bList.getBookCover());
+//        i.putExtra("title", bList.getBookTitle());
+//        i.putExtra("authors", bList.getAuthors());
+//        i.putExtra("desc", bList.getBookDesc());
+//        i.putExtra("publisher", bList.getBookPublisher());
+//        i.putExtra("publishDate", bList.getPublishDate());
+//
+//        i.putExtra("preview", bList.getPreviewLink());
+//        i.putExtra("info", bList.getInfoLink());
+//        startActivity(i);
+//    }
 }
