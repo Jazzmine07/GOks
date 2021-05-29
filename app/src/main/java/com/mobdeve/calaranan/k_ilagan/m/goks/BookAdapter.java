@@ -35,11 +35,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 //    }
 
     public class BookViewHolder extends RecyclerView.ViewHolder {
-        //public CardView bookLayout;
         public LinearLayout bookLayout;
         public TextView bookTitle, bookAuthor, bookPublisher, publishDate;
         public ImageView bookCover;
-        //viewDetailsListener viewDetails;
 
         public BookViewHolder(View itemView) {
             super(itemView);
@@ -50,11 +48,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             bookPublisher = itemView.findViewById(R.id.publisher);
             publishDate = itemView.findViewById(R.id.date);
         }
-
-//        @Override
-//        public void onClick(View v) {
-//            viewDetails.viewDetailsClick(getAdapterPosition());
-//        }
     }
 
     @NonNull
@@ -84,17 +77,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, ViewBookActivity.class);
+                i.putExtra("id", book.getBookID());
                 i.putExtra("cover", bookURL);
                 i.putExtra("title", book.getBookTitle());
                 i.putExtra("authors", book.getAuthors());
                 i.putExtra("desc", book.getBookDesc());
                 i.putExtra("publisher", book.getBookPublisher());
                 i.putExtra("publishDate", book.getPublishDate());
-
                 i.putExtra("preview", book.getPreviewLink());
-                i.putExtra("info", book.getInfoLink());
-                //i.putExtra("buy", book.getBuyLink());
+                //i.putExtra("info", book.getInfoLink());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 activity.startActivity(i);
             }
         });
