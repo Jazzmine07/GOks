@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
+        android:text="Date Published"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bookPublisher" />
 
@@ -123,6 +123,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/saveBook"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:adjustViewBounds="true"
@@ -179,8 +180,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/peach"
-                    android:drawableLeft="@drawable/basket"
-                    android:text="Buy Book"
+                    android:drawableLeft="@drawable/book"
+                    android:text="To Read"
                     android:textAllCaps="false" />
             </LinearLayout>
 

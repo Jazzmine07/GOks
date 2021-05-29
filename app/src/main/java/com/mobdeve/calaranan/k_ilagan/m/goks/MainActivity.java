@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     int i, j;
                     for (i = 0; i < itemsList.length(); i++) {
                         JSONObject itemsObj = itemsList.getJSONObject(i);
+                        String id = itemsObj.optString("id");
                         JSONObject volumeObj = itemsObj.getJSONObject("volumeInfo");
 
                         String bookTitle = volumeObj.optString("title");
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         //Log.d("authors", String.valueOf(authors));
                         // after extracting all the data, save in Book class.
-                        Book books = new Book(cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
                         bookList.add(books);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
                         BookAdapter adapter = new BookAdapter(bookList, MainActivity.this);

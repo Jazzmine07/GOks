@@ -3,6 +3,7 @@ package com.mobdeve.calaranan.k_ilagan.m.goks;
 import java.util.ArrayList;
 
 public class Book {
+    private String bookID;
     private String bookTitle;
     private ArrayList<String> authors;
     private String bookCover;
@@ -14,7 +15,8 @@ public class Book {
     private String infoLink;
     private String buyLink;
 
-    public Book(String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String infoLink) {
+    public Book(String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String infoLink) {
+        this.bookID = bookID;
         this.bookCover = bookCover;
         this.bookTitle = bookTitle;
         this.authors = authors;
@@ -24,6 +26,10 @@ public class Book {
         this.previewLink = previewLink;
         this.infoLink = infoLink;
         this.buyLink = buyLink;
+    }
+
+    public String getBookID() {
+        return bookID;
     }
 
     public String getBookTitle() {
@@ -56,45 +62,5 @@ public class Book {
 
     public String getInfoLink() {
         return infoLink;
-    }
-
-    public String getBuyLink() {
-        return buyLink;
-    }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-
-    public void setAuthors(ArrayList<String> authors) {
-        this.authors = authors;
-    }
-
-    public void setBookCover(String bookCover) {
-        this.bookCover = bookCover;
-    }
-
-    public void setBookDesc(String bookDesc) {
-        this.bookDesc = bookDesc;
-    }
-
-    public void setBookPublisher(String bookPublisher) {
-        this.bookPublisher = bookPublisher;
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
-    }
-
-    public void setPreviewLink(String previewLink) {
-        this.previewLink = previewLink;
-    }
-
-    public void setInfoLink(String infoLink) {
-        this.infoLink = infoLink;
-    }
-
-    public void setBuyLink(String buyLink) {
-        this.buyLink = buyLink;
     }
 }
