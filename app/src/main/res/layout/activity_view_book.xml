@@ -19,6 +19,7 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back" />
@@ -29,10 +30,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_bold"
             android:maxLines="2"
-            android:text="Book Title"
+            android:text="Book TitleBook TitleBook TitleBook Title"
             android:textColor="@color/light_brown"
             android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/bookAuthor"
@@ -65,7 +66,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="350dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="195dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,24 +86,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                        <FrameLayout
+                    <FrameLayout
+                        android:id="@+id/imagepart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/bookCover"
+                            android:layout_width="match_parent"
+                            android:layout_height="530dp"
+                            android:padding="6dp"
+                            app:srcCompat="@drawable/bookpic" />
+
+                        <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/imagepart">
+                            android:src="@layout/round_frame" />
 
-                            <ImageView
-                                android:id="@+id/bookCover"
-                                android:layout_width="match_parent"
-                                android:layout_height="530dp"
-                                android:padding="6dp"
-                                app:srcCompat="@drawable/bookpic" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@layout/round_frame" />
-
-                        </FrameLayout>
+                    </FrameLayout>
 
                     <ImageView
                         android:id="@+id/saveBook"
