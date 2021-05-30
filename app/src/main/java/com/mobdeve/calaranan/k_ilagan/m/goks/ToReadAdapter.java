@@ -13,18 +13,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteBookViewHolder> {
+public class ToReadAdapter extends RecyclerView.Adapter<ToReadAdapter.ToReadViewHolder>{
     public ArrayList<Book> bookList;
 
-    public FavoriteAdapter(ArrayList<Book> bList){
+    public ToReadAdapter(ArrayList<Book> bList){
         this.bookList = bList;
     }
 
-    public class FavoriteBookViewHolder extends RecyclerView.ViewHolder {
+    public class ToReadViewHolder extends RecyclerView.ViewHolder {
         public TextView bookTitle, bookAuthor, bookPublisher, publishDate;
         public ImageView bookCover;
 
-        public FavoriteBookViewHolder(View itemView) {
+        public ToReadViewHolder(@NonNull View itemView) {
             super(itemView);
             bookCover = itemView.findViewById(R.id.picture);
             bookTitle = itemView.findViewById(R.id.title);
@@ -36,14 +36,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     @NonNull
     @Override
-    public FavoriteBookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ToReadAdapter.ToReadViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_layout, parent, false);
-        FavoriteAdapter.FavoriteBookViewHolder favoriteViewHolder = new FavoriteAdapter.FavoriteBookViewHolder(view);
+        ToReadAdapter.ToReadViewHolder favoriteViewHolder = new ToReadAdapter.ToReadViewHolder(view);
         return favoriteViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavoriteBookViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ToReadAdapter.ToReadViewHolder holder, int position) {
         Book book = bookList.get(position);
 
         String bookURL;

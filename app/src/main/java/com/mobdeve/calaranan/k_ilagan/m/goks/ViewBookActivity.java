@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class ViewBookActivity extends AppCompatActivity {
     public ImageView bookCover, back, saveBook;
     public TextView bookTitle, bookAuthor, bookPublisher, bookDate, bookDesc;
-    public Button previewBtn, buyBtn;
+    public Button previewBtn, toReadBtn;
 
-    public String bookID, cover, title, description, publisher, publishedDate, previewLink, infoLink, buyLink;
+    public String bookID, cover, title, description, publisher, publishedDate, previewLink;
     public ArrayList<String> authors;
 
     @Override
@@ -37,7 +37,7 @@ public class ViewBookActivity extends AppCompatActivity {
         this.bookDate = findViewById(R.id.bookDate);
         this.bookDesc = findViewById(R.id.bookDesc);
         this.previewBtn = findViewById(R.id.previewBtn);
-        this.buyBtn = findViewById(R.id.infoBtn);
+        this.toReadBtn = findViewById(R.id.toReadBtn);
 
         Intent intent = getIntent();
         bookID = intent.getStringExtra("id");
@@ -97,17 +97,11 @@ public class ViewBookActivity extends AppCompatActivity {
             }
         });
 
-        this.buyBtn.setOnClickListener(new View.OnClickListener() {
+        this.toReadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(buyLink.isEmpty()) {
-                    Toast.makeText(ViewBookActivity.this, "There is no buy link for this book!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Uri uri = Uri.parse(buyLink);
-                Intent i = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(i);
+                DatabaseToRead db = new DatabaseToRead(ViewBookActivity.this);
+                db.AddToRead(bookID, title);
             }
         });
     }

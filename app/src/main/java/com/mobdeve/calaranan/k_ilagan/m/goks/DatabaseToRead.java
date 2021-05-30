@@ -36,21 +36,21 @@ public class DatabaseToRead extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void toRead(String bookID, String book){
+    public void AddToRead(String bookID, String book){
         SQLiteDatabase db = this.getWritableDatabase(); // write to table
         ContentValues cv = new ContentValues(); // store data from application and pass to table
 
         cv.put(FIELD_ID, bookID);
         cv.put(FIELD_BOOK, book);
 
-        if(!checkBook(bookID)){ // if book is not yet added in the to read category
+        if(!checkBook(bookID)){ // if book is not yet added in the to booklist category
             long result = db.insert(TABLE_NAME, null, cv);
             if(result == -1){
                 Toast.makeText(context, "Error adding!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "Book added in to read!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Book added in booklist!", Toast.LENGTH_SHORT).show();
             }
-        } else Toast.makeText(context, "Book already added in to read!", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(context, "Book already added in booklist!", Toast.LENGTH_SHORT).show();
     }
 
     Cursor getToRead(){
