@@ -2,13 +2,11 @@ package com.mobdeve.calaranan.k_ilagan.m.goks;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -30,7 +28,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-
     public View view;
     public RecyclerView mainRv;
     public ArrayList<Book> bookList;
@@ -70,7 +67,6 @@ public class HomeFragment extends Fragment {
                 searchResults(searchEt.getText().toString());
             }
         });
-
     }
 
     private void searchResults(String query){
@@ -115,7 +111,7 @@ public class HomeFragment extends Fragment {
                         Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
                         bookList.add(books);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                        BookAdapter adapter = new BookAdapter(bookList, getActivity());
+                        HomeAdapter adapter = new HomeAdapter(bookList, getActivity());
                         mainRv.setLayoutManager(layoutManager);
                         mainRv.setAdapter(adapter);
 

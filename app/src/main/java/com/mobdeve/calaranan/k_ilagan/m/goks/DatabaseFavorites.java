@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class DatabaseLibrary extends SQLiteOpenHelper {
+public class DatabaseFavorites extends SQLiteOpenHelper {
     private Context context;
     private static final String DB_NAME = "GOksLibrary.db";
     private static final int DB_VERSION = 1;
@@ -18,7 +18,7 @@ public class DatabaseLibrary extends SQLiteOpenHelper {
     private static final String FIELD_ID = "_ID";
     private static final String FIELD_BOOK = "_book";
 
-    public DatabaseLibrary(@Nullable Context context) {
+    public DatabaseFavorites(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
     }
@@ -53,7 +53,7 @@ public class DatabaseLibrary extends SQLiteOpenHelper {
         } else Toast.makeText(context, "Book already added in library!", Toast.LENGTH_SHORT).show();
     }
 
-    Cursor getBooks(){
+    Cursor getFavoriteBooks(){
         String retrieve = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
@@ -61,6 +61,16 @@ public class DatabaseLibrary extends SQLiteOpenHelper {
         if(db != null){
             cursor = db.rawQuery(retrieve, null);   // contains all data
         } return cursor;
+    }
+
+    public void removeBook(String rowID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, "_ID=?", new String[]{rowID});
+        if(result == -1){
+            Toast.makeText(context, "Error removing book in library!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Book removed from library!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean checkBook(String bookID) {

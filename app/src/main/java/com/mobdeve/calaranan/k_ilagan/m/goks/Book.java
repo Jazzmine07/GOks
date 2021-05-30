@@ -28,6 +28,15 @@ public class Book {
         this.buyLink = buyLink;
     }
 
+    public Book (String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookPublisher, String publishDate){
+        this.bookID = bookID;
+        this.bookCover = bookCover;
+        this.bookTitle = bookTitle;
+        this.authors = authors;
+        this.bookPublisher = bookPublisher;
+        this.publishDate = publishDate;
+    }
+
     public String getBookID() {
         return bookID;
     }

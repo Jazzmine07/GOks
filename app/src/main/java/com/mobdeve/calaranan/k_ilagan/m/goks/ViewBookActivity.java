@@ -77,7 +77,7 @@ public class ViewBookActivity extends AppCompatActivity {
         this.saveBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseLibrary db = new DatabaseLibrary(ViewBookActivity.this);
+                DatabaseFavorites db = new DatabaseFavorites(ViewBookActivity.this);
                 db.saveBook(bookID, title);
             }
         });
