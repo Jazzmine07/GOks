@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class Database extends SQLiteOpenHelper {
+public class DatabaseLibrary extends SQLiteOpenHelper {
     private Context context;
     private static final String DB_NAME = "GOksLibrary.db";
     private static final int DB_VERSION = 1;
@@ -18,7 +18,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String FIELD_ID = "_ID";
     private static final String FIELD_BOOK = "_book";
 
-    public Database(@Nullable Context context) {
+    public DatabaseLibrary(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
     }
