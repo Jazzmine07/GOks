@@ -71,8 +71,8 @@ public class DatabaseToRead extends SQLiteOpenHelper {
         }
     }
 
-    Cursor searchBook(String query){
-        String search = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_BOOK + " = \"" + query + "\";";
+    Cursor searchBook(String title){
+        String search = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_BOOK + " LIKE '%" + title + "%'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 

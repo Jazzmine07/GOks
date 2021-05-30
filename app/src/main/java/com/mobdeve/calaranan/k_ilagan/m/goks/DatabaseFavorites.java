@@ -73,6 +73,16 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         }
     }
 
+    Cursor searchBook(String title){
+        String search = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_BOOK + " LIKE '%" + title + "%'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        if(db != null){
+            cursor = db.rawQuery(search, null);   // contains all data
+        } return cursor;
+    }
+
     public boolean checkBook(String bookID) {
         String check = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_ID + " = \"" + bookID + "\";";
         SQLiteDatabase db = this.getWritableDatabase();

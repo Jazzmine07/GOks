@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,6 +38,9 @@ public class BooklistFragment extends Fragment {
     ToReadAdapter adapter;
     public ArrayList<Book> bookList;
     public ArrayList<String> idList;
+    public ArrayList<String> searchIdList;
+    public EditText searchTitleEt;
+    public FrameLayout searchList;
     public BottomNavigationView navBar;
     public RequestQueue reqQueue;
     public DatabaseToRead db;
@@ -50,6 +55,8 @@ public class BooklistFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_booklist, container, false);
         wantRv = view.findViewById(R.id.wantRv);
+        searchTitleEt = view.findViewById(R.id.searchFavTitleEt);
+        searchList = view.findViewById(R.id.searchList);
         navBar = view.findViewById(R.id.navBar);
         db = new DatabaseToRead(getActivity());
 
@@ -57,6 +64,26 @@ public class BooklistFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(wantRv);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.searchList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookList = new ArrayList<>();
+                searchIdList = new ArrayList<>();
+                if (searchTitleEt.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "Please enter book title!", Toast.LENGTH_SHORT).show();
+                }
+                searchBook(searchTitleEt.getText().toString());
+                for(int i = 0; i < searchIdList.size(); i++){
+
+                    getBooks(searchIdList.get(i));
+                }
+            }
+        });
     }
 
     @Override
@@ -73,10 +100,21 @@ public class BooklistFragment extends Fragment {
     public void getToRead(){
         Cursor cursor = db.getToRead();
         if(cursor.getCount() == 0){
-            Toast.makeText(getActivity(), "No want to read books!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "No book/s found in booklist!", Toast.LENGTH_SHORT).show();
         } else {
             while(cursor.moveToNext()){
                 idList.add(cursor.getString(0));    // getting id list from db
+            }
+        }
+    }
+
+    public void searchBook(String title){
+        Cursor cursor = db.searchBook(title);
+        if(cursor.getCount() == 0){
+            Toast.makeText(getActivity(), "No books in booklist!", Toast.LENGTH_SHORT).show();
+        } else {
+            while(cursor.moveToNext()){
+                searchIdList.add(cursor.getString(0));    // getting id list from db based on search title
             }
         }
     }

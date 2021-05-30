@@ -38,6 +38,9 @@ public class FavoritesFragment extends Fragment {
     FavoriteAdapter adapter;
     public ArrayList<Book> bookList;
     public ArrayList<String> idList;
+    public ArrayList<String> searchIdList;
+    public EditText searchFavTitleEt;
+    public FrameLayout searchFavorite;
     public BottomNavigationView navBar;
     public RequestQueue reqQueue;
     public DatabaseFavorites db;
@@ -52,6 +55,8 @@ public class FavoritesFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_favorites, container, false);
         favRv = view.findViewById(R.id.favRv);
+        searchFavTitleEt = view.findViewById(R.id.searchFavTitleEt);
+        searchFavorite = view.findViewById(R.id.searchFavorite);
         navBar = view.findViewById(R.id.navBar);
         db = new DatabaseFavorites(getActivity());
 
@@ -60,7 +65,24 @@ public class FavoritesFragment extends Fragment {
         return view;
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.searchFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookList = new ArrayList<>();
+                searchIdList = new ArrayList<>();
+                if (searchFavTitleEt.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "Please enter book title!", Toast.LENGTH_SHORT).show();
+                }
+                searchBook(searchFavTitleEt.getText().toString());
+                for(int i = 0; i < searchIdList.size(); i++){
+                    getBooks(searchIdList.get(i));
+                }
+            }
+        });
+    }
 
     @Override
     public void onResume() {
@@ -80,6 +102,17 @@ public class FavoritesFragment extends Fragment {
         } else {
             while(cursor.moveToNext()){
                 idList.add(cursor.getString(0));    // getting id list from db
+            }
+        }
+    }
+
+    public void searchBook(String title){
+        Cursor cursor = db.searchBook(title);
+        if(cursor.getCount() == 0){
+            Toast.makeText(getActivity(), "No books in favorites!", Toast.LENGTH_SHORT).show();
+        } else {
+            while(cursor.moveToNext()){
+                searchIdList.add(cursor.getString(0));    // getting id list from db based on search title
             }
         }
     }

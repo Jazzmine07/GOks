@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         mainRv = view.findViewById(R.id.mainRv);
-        searchEt = view.findViewById(R.id.searchLib);
+        searchEt = view.findViewById(R.id.searchFavTitleEt);
         searchBtn = view.findViewById(R.id.searchLibBtn);
         navBar = view.findViewById(R.id.navBar);
         bookList = new ArrayList<>();
