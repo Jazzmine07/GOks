@@ -42,22 +42,37 @@ public class Database extends SQLiteOpenHelper {
 
         cv.put(FIELD_ID, bookID);
         cv.put(FIELD_BOOK, book);
-        long result = db.insert(TABLE_NAME, null, cv);
 
-        if(result == -1){
-            Toast.makeText(context, "Error adding!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Book added in library!", Toast.LENGTH_SHORT).show();
-        }
+        if(!checkBook(bookID)){ // if book is not yet added in the library, insert
+            long result = db.insert(TABLE_NAME, null, cv);
+            if(result == -1){
+                Toast.makeText(context, "Error adding!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Book added in library!", Toast.LENGTH_SHORT).show();
+            }
+        } else Toast.makeText(context, "Book already added in library!", Toast.LENGTH_SHORT).show();
     }
 
     Cursor getBooks(){
         String retrieve = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor  cursor = null;
+        Cursor cursor = null;
 
         if(db != null){
             cursor = db.rawQuery(retrieve, null);   // contains all data
         } return cursor;
+    }
+
+    public boolean checkBook(String bookID) {
+        String check = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_ID + " = \"" + bookID + "\";";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(check, null);
+        if(cursor.getCount() == 1){ // book already in library
+            cursor.close();
+            return true;
+        }
+        cursor.close();
+        return false;
     }
 }
