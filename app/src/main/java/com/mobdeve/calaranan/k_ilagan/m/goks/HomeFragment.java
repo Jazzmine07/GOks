@@ -52,13 +52,9 @@ public class HomeFragment extends Fragment {
         searchEt = view.findViewById(R.id.searchEt);
         searchBtn = view.findViewById(R.id.searchBtn);
         navBar = view.findViewById(R.id.navBar);
-
         bookList = new ArrayList<>();
-
         return view;
-
     }
-
 
     @Override
     public void onStart() {
@@ -108,9 +104,6 @@ public class HomeFragment extends Fragment {
                         String previewLink = volumeObj.optString("previewLink");
                         String infoLink = volumeObj.optString("infoLink");
 
-//                        JSONObject saleInfoObj = itemsObj.optJSONObject("saleInfo");
-//                        String buyLink = saleInfoObj.optString("buyLink");
-
                         ArrayList<String> authors = new ArrayList<>();
 
                         if (authorsList.length() != 0) {
@@ -118,8 +111,7 @@ public class HomeFragment extends Fragment {
                                 authors.add(authorsList.optString(j));
                             }
                         }
-                        //Log.d("authors", String.valueOf(authors));
-                        // after extracting all the data, save in Book class.
+
                         Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
                         bookList.add(books);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -127,12 +119,7 @@ public class HomeFragment extends Fragment {
                         mainRv.setLayoutManager(layoutManager);
                         mainRv.setAdapter(adapter);
 
-//                        layoutManager = new LinearLayoutManager(MainActivity.this);
-//                        adapter = new BookAdapter(bookList, this);
-//                        mainRv.setLayoutManager(layoutManager);
-//                        mainRv.setAdapter(adapter);
                     }
-                    //recyclerViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     // displaying a toast message when we get any error from API

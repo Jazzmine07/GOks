@@ -22,17 +22,11 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     public ArrayList<Book> bookList;
     public Context activity;
-    //public viewDetailsListener onClickViewDetailsListener;
 
     public BookAdapter(ArrayList<Book> bList, Context context){   // getting bookList to the adapter (constructor)
         this.bookList = bList;
         this.activity = context;
     }
-
-//    public BookAdapter(ArrayList<Book> bList, viewDetailsListener viewDetailsListener){   // getting bookList to the adapter (constructor)
-//        this.bookList = bList;
-//        this.onClickViewDetailsListener = viewDetailsListener;
-//    }
 
     public class BookViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout bookLayout;
@@ -85,7 +79,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 i.putExtra("publisher", book.getBookPublisher());
                 i.putExtra("publishDate", book.getPublishDate());
                 i.putExtra("preview", book.getPreviewLink());
-                //i.putExtra("info", book.getInfoLink());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 activity.startActivity(i);
@@ -98,7 +91,4 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return bookList.size();
     }
 
-//    public interface viewDetailsListener {
-//        void viewDetailsClick(int position);
-//    }
 }
