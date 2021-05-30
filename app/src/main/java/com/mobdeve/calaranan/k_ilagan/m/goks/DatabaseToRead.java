@@ -63,6 +63,24 @@ public class DatabaseToRead extends SQLiteOpenHelper {
         } return cursor;
     }
 
+    public void removeBook(String bookID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, "_id=?", new String[]{bookID});
+        if(result == -1){
+            Toast.makeText(context, "Error removing book in library!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    Cursor searchBook(String query){
+        String search = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_BOOK + " = \"" + query + "\";";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        if(db != null){
+            cursor = db.rawQuery(search, null);   // contains all data
+        } return cursor;
+    }
+
     public boolean checkBook(String bookID) {
         String check = "SELECT * FROM " + TABLE_NAME + " WHERE " + FIELD_ID + " = \"" + bookID + "\";";
         SQLiteDatabase db = this.getWritableDatabase();

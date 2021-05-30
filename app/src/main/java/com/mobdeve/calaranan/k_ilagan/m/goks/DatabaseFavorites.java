@@ -63,13 +63,13 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         } return cursor;
     }
 
-    public void removeBook(String rowID){
+    public void removeBook(String bookID){
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_NAME, "_ID=?", new String[]{rowID});
+        long result = db.delete(TABLE_NAME, "_ID=?", new String[]{bookID});
         if(result == -1){
-            Toast.makeText(context, "Error removing book in library!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Error removing book in favorites!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Book removed from library!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Book removed from favorites!", Toast.LENGTH_SHORT).show();
         }
     }
 

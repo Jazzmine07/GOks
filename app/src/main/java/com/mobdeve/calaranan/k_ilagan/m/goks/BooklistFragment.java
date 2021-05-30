@@ -150,6 +150,7 @@ public class BooklistFragment extends Fragment {
             bookList.remove(position);
             idList.remove(position);
             adapter.notifyItemRemoved(position);
+            db.removeBook(bookID);
 
             Snackbar.make(wantRv, book.getBookTitle() + " deleted from booklist", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                 @Override
@@ -157,6 +158,7 @@ public class BooklistFragment extends Fragment {
                     bookList.add(position, book);
                     idList.add(position, bookID);
                     adapter.notifyItemInserted(position);
+                    db.AddToRead(bookID, book.getBookTitle());
                 }
             }).show();
         }

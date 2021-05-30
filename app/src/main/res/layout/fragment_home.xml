@@ -57,7 +57,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
-                android:id="@+id/searchEt"
+                android:id="@+id/searchLib"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/search_bar"
@@ -78,7 +78,7 @@
                 android:layout_alignParentRight="true">
 
                 <ImageView
-                    android:id="@+id/searchBtn"
+                    android:id="@+id/searchLibBtn"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:padding="12dp"

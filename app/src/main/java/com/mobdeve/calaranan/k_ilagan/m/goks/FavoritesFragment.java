@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -57,6 +59,8 @@ public class FavoritesFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(favRv);
         return view;
     }
+
+
 
     @Override
     public void onResume() {
@@ -149,6 +153,7 @@ public class FavoritesFragment extends Fragment {
             bookList.remove(position);
             idList.remove(position);
             adapter.notifyItemRemoved(position);
+            db.removeBook(bookID);
 
             Snackbar.make(favRv, book.getBookTitle() + " deleted from favorites", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                 @Override
@@ -156,6 +161,7 @@ public class FavoritesFragment extends Fragment {
                     bookList.add(position, book);
                     idList.add(position, bookID);
                     adapter.notifyItemInserted(position);
+                    db.saveBook(bookID, book.getBookTitle());
                 }
             }).show();
         }
