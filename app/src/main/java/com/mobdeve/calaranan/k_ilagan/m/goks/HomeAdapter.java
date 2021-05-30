@@ -77,6 +77,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.BookViewHolder
                 i.putExtra("publisher", book.getBookPublisher());
                 i.putExtra("publishDate", book.getPublishDate());
                 i.putExtra("preview", book.getPreviewLink());
+                i.putExtra("pdf", book.getPdfLink());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 activity.startActivity(i);

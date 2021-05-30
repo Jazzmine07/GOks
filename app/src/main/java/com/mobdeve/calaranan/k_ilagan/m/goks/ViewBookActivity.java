@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class ViewBookActivity extends AppCompatActivity {
     public ImageView bookCover, back, saveBook;
     public TextView bookTitle, bookAuthor, bookPublisher, bookDate, bookDesc;
-    public Button previewBtn, toReadBtn;
+    public Button previewBtn, toReadBtn, downloadBtn;
 
-    public String bookID, cover, title, description, publisher, publishedDate, previewLink;
+    public String bookID, cover, title, description, publisher, publishedDate, previewLink, pdfLink;
     public ArrayList<String> authors;
 
     @Override
@@ -38,6 +38,7 @@ public class ViewBookActivity extends AppCompatActivity {
         this.bookDesc = findViewById(R.id.bookDesc);
         this.previewBtn = findViewById(R.id.previewBtn);
         this.toReadBtn = findViewById(R.id.toReadBtn);
+        this.downloadBtn = findViewById(R.id.downloadBtn);
 
         Intent intent = getIntent();
         bookID = intent.getStringExtra("id");
@@ -50,6 +51,8 @@ public class ViewBookActivity extends AppCompatActivity {
         publisher = intent.getStringExtra("publisher");
         publishedDate = intent.getStringExtra("publishDate");
         previewLink = intent.getStringExtra("preview");
+        pdfLink = intent.getStringExtra("pdf");
+
         //buyLink = intent.getStringExtra("buy");
 
         // setting data to views
@@ -102,6 +105,21 @@ public class ViewBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseToRead db = new DatabaseToRead(ViewBookActivity.this);
                 db.AddToRead(bookID, title);
+            }
+        });
+
+        this.downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pdfLink == null) {
+                    // below toast message is displayed when preview link is not present.
+                    Toast.makeText(ViewBookActivity.this, "There is no ACS token for this book!", Toast.LENGTH_LONG).show();
+                }
+                else if(pdfLink != null) {
+                    Uri uri = Uri.parse(pdfLink);
+                    Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(i);
+                }
             }
         });
     }

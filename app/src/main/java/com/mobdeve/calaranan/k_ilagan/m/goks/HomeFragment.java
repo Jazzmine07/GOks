@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,18 @@ public class HomeFragment extends Fragment {
                         String previewLink = volumeObj.optString("previewLink");
                         String infoLink = volumeObj.optString("infoLink");
 
+                        JSONObject accessInfo = itemsObj.getJSONObject("accessInfo");
+                        JSONObject pdfObj = accessInfo.getJSONObject("pdf");
+                        Boolean pdfAvailable = pdfObj.getBoolean("isAvailable");
+                        String pdfLink = null;
+                        if (pdfAvailable){
+                            pdfLink = pdfObj.getString("acsTokenLink");
+                            Log.d("testing", "pdf " + bookTitle);
+                            Log.d("testing", "pdf " + String.valueOf(pdfAvailable));
+                            Log.d("testing", "pdf " + pdfLink);
+                        }
+
+
                         ArrayList<String> authors = new ArrayList<>();
 
                         if (authorsList.length() != 0) {
@@ -108,8 +121,14 @@ public class HomeFragment extends Fragment {
                             }
                         }
 
-                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
-                        bookList.add(books);
+                        if (pdfAvailable){
+                            Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink, pdfLink);
+                            bookList.add(books);
+                        }
+                        else {
+                            Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
+                            bookList.add(books);
+                        }
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                         HomeAdapter adapter = new HomeAdapter(bookList, getActivity());
                         mainRv.setLayoutManager(layoutManager);
