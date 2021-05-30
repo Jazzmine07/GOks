@@ -3,7 +3,9 @@ package com.mobdeve.calaranan.k_ilagan.m.goks;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 public class BooklistFragment extends Fragment {
     public View view;
     public RecyclerView wantRv;
+    ToReadAdapter adapter;
     public ArrayList<Book> bookList;
     public ArrayList<String> idList;
     public BottomNavigationView navBar;
@@ -48,6 +52,10 @@ public class BooklistFragment extends Fragment {
         wantRv = view.findViewById(R.id.wantRv);
         navBar = view.findViewById(R.id.navBar);
         db = new DatabaseToRead(getActivity());
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallBack);
+        itemTouchHelper.attachToRecyclerView(wantRv);
+
         return view;
     }
 
@@ -65,7 +73,7 @@ public class BooklistFragment extends Fragment {
     public void getToRead(){
         Cursor cursor = db.getToRead();
         if(cursor.getCount() == 0){
-            Toast.makeText(getActivity(), "No favorite books!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "No want to read books!", Toast.LENGTH_SHORT).show();
         } else {
             while(cursor.moveToNext()){
                 idList.add(cursor.getString(0));    // getting id list from db
@@ -107,7 +115,7 @@ public class BooklistFragment extends Fragment {
                     Book books = new Book(id, cover, bookTitle, authors, bookPublisher, publishDate);
                     bookList.add(books);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    ToReadAdapter adapter = new ToReadAdapter(bookList);
+                    adapter = new ToReadAdapter(bookList);
                     wantRv.setLayoutManager(layoutManager);
                     wantRv.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -124,4 +132,34 @@ public class BooklistFragment extends Fragment {
         });
         requestQueue.add(booksObjReq);
     }
+
+    String bookID;
+    Book book;
+
+    ItemTouchHelper.SimpleCallback simpleCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            final int position = viewHolder.getAdapterPosition();
+            bookID = idList.get(position);
+            book = bookList.get(position);
+            bookList.remove(position);
+            idList.remove(position);
+            adapter.notifyItemRemoved(position);
+
+            Snackbar.make(wantRv, book.getBookTitle() + " deleted from booklist", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bookList.add(position, book);
+                    idList.add(position, bookID);
+                    adapter.notifyItemInserted(position);
+                }
+            }).show();
+        }
+    };
+
 }
