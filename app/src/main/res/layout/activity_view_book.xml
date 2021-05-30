@@ -3,81 +3,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="15dp"
     tools:context=".ViewBookActivity">
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/bookTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/noto_sans_bold"
-        android:text="Book Title"
-        android:textColor="@color/light_brown"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back" />
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back" />
 
-    <TextView
-        android:id="@+id/bookAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="Author"
-        android:textColor="@color/light_gray"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookTitle" />
+        <TextView
+            android:id="@+id/bookTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_bold"
+            android:maxLines="2"
+            android:text="Book Title"
+            android:textColor="@color/light_brown"
+            android:textSize="28sp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/bookPublisher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Publisher"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookAuthor" />
+        <TextView
+            android:id="@+id/bookAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:maxLines="1"
+            android:text="Author"
+            android:textColor="@color/light_gray"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/bookDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Date Published"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookPublisher" />
+        <TextView
+            android:id="@+id/bookPublisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Publisher" />
+
+        <TextView
+            android:id="@+id/bookDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Date Published" />
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="350dp"
-        android:layout_height="510dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookDate">
+        app:layout_constraintTop_toBottomOf="@+id/top">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <FrameLayout
@@ -85,18 +81,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="530dp">
+                    android:layout_height="match_parent">
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="match_parent"
+                            android:id="@+id/imagepart">
 
                             <ImageView
                                 android:id="@+id/bookCover"
@@ -112,22 +104,16 @@
 
                         </FrameLayout>
 
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/saveBook"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignBottom="@+id/imagepart"
+                        android:layout_alignParentRight="true"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/heart_icon" />
+                </RelativeLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/saveBook"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/heart_icon" />
             </FrameLayout>
 
             <TextView
@@ -169,8 +155,8 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/teal_700"
-                    android:drawableLeft="@drawable/book"
-                    android:text="Preview"
+                    android:drawableLeft="@drawable/preview"
+                    android:text="Preview Book"
                     android:textAllCaps="false" />
 
                 <Button
@@ -181,7 +167,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/peach"
                     android:drawableLeft="@drawable/book"
-                    android:text="To Read"
+                    android:text="Add To Read"
                     android:textAllCaps="false" />
             </LinearLayout>
 
