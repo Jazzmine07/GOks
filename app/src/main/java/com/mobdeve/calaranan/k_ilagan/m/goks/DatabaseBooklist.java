@@ -61,7 +61,7 @@ public class DatabaseBooklist extends SQLiteOpenHelper {
         cv.put(FIELD_BOOK, book);
 
         if(!checkBook(bookID)){ // if book is not yet added in the to booklist category
-            long result = db.insert(TABLE_NAME, null, cv);
+            db.insert(TABLE_NAME, null, cv);
         } else Toast.makeText(context, "Book already added in booklist!", Toast.LENGTH_SHORT).show();
     }
 
