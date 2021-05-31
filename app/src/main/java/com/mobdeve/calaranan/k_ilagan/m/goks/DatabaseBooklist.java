@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class DatabaseToRead extends SQLiteOpenHelper {
+public class DatabaseBooklist extends SQLiteOpenHelper {
     private Context context;
     private static final String DB_NAME = "GOksToRead.db";
     private static final int DB_VERSION = 1;
@@ -18,7 +18,7 @@ public class DatabaseToRead extends SQLiteOpenHelper {
     private static final String FIELD_ID = "_id";
     private static final String FIELD_BOOK = "_title";
 
-    public DatabaseToRead(@Nullable Context context) {
+    public DatabaseBooklist(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
     }
@@ -50,6 +50,18 @@ public class DatabaseToRead extends SQLiteOpenHelper {
             } else {
                 Toast.makeText(context, "Book added in booklist!", Toast.LENGTH_SHORT).show();
             }
+        } else Toast.makeText(context, "Book already added in booklist!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void undoRemove(String bookID, String book){
+        SQLiteDatabase db = this.getWritableDatabase(); // write to table
+        ContentValues cv = new ContentValues(); // store data from application and pass to table
+
+        cv.put(FIELD_ID, bookID);
+        cv.put(FIELD_BOOK, book);
+
+        if(!checkBook(bookID)){ // if book is not yet added in the to booklist category
+            long result = db.insert(TABLE_NAME, null, cv);
         } else Toast.makeText(context, "Book already added in booklist!", Toast.LENGTH_SHORT).show();
     }
 

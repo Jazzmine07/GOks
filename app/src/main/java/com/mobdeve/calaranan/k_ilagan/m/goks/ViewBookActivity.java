@@ -99,7 +99,7 @@ public class ViewBookActivity extends AppCompatActivity {
         this.toReadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseToRead db = new DatabaseToRead(ViewBookActivity.this);
+                DatabaseBooklist db = new DatabaseBooklist(ViewBookActivity.this);
                 db.AddToRead(bookID, title);
             }
         });

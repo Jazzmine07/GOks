@@ -99,7 +99,6 @@ public class HomeFragment extends Fragment {
                         JSONObject imageLinks = volumeObj.optJSONObject("imageLinks");
                         String cover = imageLinks.optString("thumbnail");
                         String previewLink = volumeObj.optString("previewLink");
-                        String infoLink = volumeObj.optString("infoLink");
 
                         JSONObject accessInfo = itemsObj.getJSONObject("accessInfo");
                         JSONObject pdfObj = accessInfo.getJSONObject("pdf");
@@ -107,11 +106,7 @@ public class HomeFragment extends Fragment {
                         String pdfLink = null;
                         if (pdfAvailable){
                             pdfLink = pdfObj.getString("acsTokenLink");
-                            Log.d("testing", "pdf " + bookTitle);
-                            Log.d("testing", "pdf " + String.valueOf(pdfAvailable));
-                            Log.d("testing", "pdf " + pdfLink);
                         }
-
 
                         ArrayList<String> authors = new ArrayList<>();
 
@@ -122,11 +117,11 @@ public class HomeFragment extends Fragment {
                         }
 
                         if (pdfAvailable){
-                            Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink, pdfLink);
+                            Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, pdfLink);
                             bookList.add(books);
                         }
                         else {
-                            Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, infoLink);
+                            Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink);
                             bookList.add(books);
                         }
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

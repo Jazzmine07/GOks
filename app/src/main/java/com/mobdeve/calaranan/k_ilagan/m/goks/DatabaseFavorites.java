@@ -53,8 +53,20 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         } else Toast.makeText(context, "Book already added in library!", Toast.LENGTH_SHORT).show();
     }
 
+    public void undoRemove(String bookID, String book){
+        SQLiteDatabase db = this.getWritableDatabase(); // write to table
+        ContentValues cv = new ContentValues(); // store data from application and pass to table
+
+        cv.put(FIELD_ID, bookID);
+        cv.put(FIELD_BOOK, book);
+
+        if(!checkBook(bookID)){ // if book is not yet added in the library, insert
+            long result = db.insert(TABLE_NAME, null, cv);
+        } else Toast.makeText(context, "Book already added in library!", Toast.LENGTH_SHORT).show();
+    }
+
     Cursor getFavoriteBooks(){
-        String retrieve = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + FIELD_BOOK + " ASC";
+        String retrieve = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + FIELD_BOOK;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 
@@ -69,8 +81,6 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
         long result = db.delete(TABLE_NAME, "_ID=?", new String[]{bookID});
         if(result == -1){
             Toast.makeText(context, "Error removing book in favorites!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Book removed from favorites!", Toast.LENGTH_SHORT).show();
         }
     }
 

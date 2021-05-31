@@ -35,10 +35,12 @@ import java.util.ArrayList;
 public class FavoritesFragment extends Fragment {
     public View view;
     public RecyclerView favRv;
-    FavoriteAdapter adapter;
+    public FavoriteAdapter adapter;
     public ArrayList<Book> bookList;
     public ArrayList<String> idList;
     public ArrayList<String> searchIdList;
+    public String bookID;
+    public Book book;
     public EditText searchFavTitleEt;
     public FrameLayout searchFavorite;
     public BottomNavigationView navBar;
@@ -130,28 +132,44 @@ public class FavoritesFragment extends Fragment {
                 // extracting all json data.
                 try {
                     String id = response.getString("id");
-                    Log.d("volume id", id);
-                    //String id = volumeID.optString("id");
+
                     JSONObject volumeObj = response.getJSONObject("volumeInfo");
                     String bookTitle = volumeObj.optString("title");
                     JSONArray authorsList = volumeObj.getJSONArray("authors");
+                    String bookDesc = volumeObj.optString("description");
                     String bookPublisher = volumeObj.optString("publisher");
                     String publishDate = volumeObj.optString("publishedDate");
 
                     JSONObject imageLinks = volumeObj.optJSONObject("imageLinks");
                     String cover = imageLinks.optString("thumbnail");
+                    String previewLink = volumeObj.optString("previewLink");
+
+                    JSONObject accessInfo = response.getJSONObject("accessInfo");
+                    JSONObject pdfObj = accessInfo.getJSONObject("pdf");
+                    Boolean pdfAvailable = pdfObj.getBoolean("isAvailable");
+                    String pdfLink = null;
+                    if (pdfAvailable){
+                        pdfLink = pdfObj.getString("acsTokenLink");
+                    }
 
                     ArrayList<String> authors = new ArrayList<>();
+
                     if (authorsList.length() != 0) {
                         for (int j = 0; j < authorsList.length(); j++) {
                             authors.add(authorsList.optString(j));
                         }
                     }
 
-                    Book books = new Book(id, cover, bookTitle, authors, bookPublisher, publishDate);
-                    bookList.add(books);
+                    if (pdfAvailable){
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, pdfLink);
+                        bookList.add(books);
+                    }
+                    else {
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink);
+                        bookList.add(books);
+                    }
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    adapter = new FavoriteAdapter(bookList);
+                    adapter = new FavoriteAdapter(bookList, getActivity());
                     favRv.setLayoutManager(layoutManager);
                     favRv.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -169,9 +187,6 @@ public class FavoritesFragment extends Fragment {
         requestQueue.add(booksObjReq);
     }
 
-    String bookID;
-    Book book;
-
     ItemTouchHelper.SimpleCallback simpleCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -181,10 +196,12 @@ public class FavoritesFragment extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            bookID = idList.get(position);
-            book = bookList.get(position);
+            bookID = idList.get(position);  // string
+            book = bookList.get(position);  // class BOOK
+            Log.d("book on swipe", String.valueOf(book));
             bookList.remove(position);
             idList.remove(position);
+            Log.d("position", String.valueOf(position));
             adapter.notifyItemRemoved(position);
             db.removeBook(bookID);
 
@@ -194,7 +211,7 @@ public class FavoritesFragment extends Fragment {
                     bookList.add(position, book);
                     idList.add(position, bookID);
                     adapter.notifyItemInserted(position);
-                    db.saveBook(bookID, book.getBookTitle());
+                    db.undoRemove(bookID, book.getBookTitle());
                 }
             }).show();
         }

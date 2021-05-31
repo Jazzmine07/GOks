@@ -12,10 +12,9 @@ public class Book {
     private String publishDate;
 
     private String previewLink;
-    private String infoLink;
     private String pdfLink;
 
-    public Book(String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String infoLink) {
+    public Book(String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink) {
         this.bookID = bookID;
         this.bookCover = bookCover;
         this.bookTitle = bookTitle;
@@ -24,7 +23,6 @@ public class Book {
         this.bookPublisher = bookPublisher;
         this.publishDate = publishDate;
         this.previewLink = previewLink;
-        this.infoLink = infoLink;
     }
 
     public Book (String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookPublisher, String publishDate){
@@ -36,7 +34,7 @@ public class Book {
         this.publishDate = publishDate;
     }
 
-    public Book (String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String infoLink, String pdfLink){
+    public Book (String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String pdfLink){
         this.bookID = bookID;
         this.bookCover = bookCover;
         this.bookTitle = bookTitle;
@@ -45,7 +43,6 @@ public class Book {
         this.bookPublisher = bookPublisher;
         this.publishDate = publishDate;
         this.previewLink = previewLink;
-        this.infoLink = infoLink;
         this.pdfLink = pdfLink;
     }
 
@@ -79,10 +76,6 @@ public class Book {
 
     public String getPreviewLink() {
         return previewLink;
-    }
-
-    public String getInfoLink() {
-        return infoLink;
     }
 
     public String getPdfLink(){

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +34,17 @@ import java.util.ArrayList;
 public class BooklistFragment extends Fragment {
     public View view;
     public RecyclerView wantRv;
-    BooklistAdapter adapter;
+    public BooklistAdapter adapter;
     public ArrayList<Book> bookList;
     public ArrayList<String> idList;
     public ArrayList<String> searchIdList;
+    public String bookID;
+    public Book book;
     public EditText searchTitleEt;
     public FrameLayout searchList;
     public BottomNavigationView navBar;
     public RequestQueue reqQueue;
-    public DatabaseToRead db;
+    public DatabaseBooklist db;
 
     public BooklistFragment() {
         // Required empty public constructor
@@ -58,7 +59,7 @@ public class BooklistFragment extends Fragment {
         searchTitleEt = view.findViewById(R.id.searchFavTitleEt);
         searchList = view.findViewById(R.id.searchList);
         navBar = view.findViewById(R.id.navBar);
-        db = new DatabaseToRead(getActivity());
+        db = new DatabaseBooklist(getActivity());
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallBack);
         itemTouchHelper.attachToRecyclerView(wantRv);
@@ -79,7 +80,6 @@ public class BooklistFragment extends Fragment {
                 }
                 searchBook(searchTitleEt.getText().toString());
                 for(int i = 0; i < searchIdList.size(); i++){
-
                     getBooks(searchIdList.get(i));
                 }
             }
@@ -132,28 +132,44 @@ public class BooklistFragment extends Fragment {
                 // extracting all json data.
                 try {
                     String id = response.getString("id");
-                    Log.d("volume id", id);
-                    //String id = volumeID.optString("id");
+
                     JSONObject volumeObj = response.getJSONObject("volumeInfo");
                     String bookTitle = volumeObj.optString("title");
                     JSONArray authorsList = volumeObj.getJSONArray("authors");
+                    String bookDesc = volumeObj.optString("description");
                     String bookPublisher = volumeObj.optString("publisher");
                     String publishDate = volumeObj.optString("publishedDate");
 
                     JSONObject imageLinks = volumeObj.optJSONObject("imageLinks");
                     String cover = imageLinks.optString("thumbnail");
+                    String previewLink = volumeObj.optString("previewLink");
+
+                    JSONObject accessInfo = response.getJSONObject("accessInfo");
+                    JSONObject pdfObj = accessInfo.getJSONObject("pdf");
+                    Boolean pdfAvailable = pdfObj.getBoolean("isAvailable");
+                    String pdfLink = null;
+                    if (pdfAvailable){
+                        pdfLink = pdfObj.getString("acsTokenLink");
+                    }
 
                     ArrayList<String> authors = new ArrayList<>();
+
                     if (authorsList.length() != 0) {
                         for (int j = 0; j < authorsList.length(); j++) {
                             authors.add(authorsList.optString(j));
                         }
                     }
 
-                    Book books = new Book(id, cover, bookTitle, authors, bookPublisher, publishDate);
-                    bookList.add(books);
+                    if (pdfAvailable){
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, pdfLink);
+                        bookList.add(books);
+                    }
+                    else {
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink);
+                        bookList.add(books);
+                    }
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    adapter = new BooklistAdapter(bookList);
+                    adapter = new BooklistAdapter(bookList, getActivity());
                     wantRv.setLayoutManager(layoutManager);
                     wantRv.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -170,9 +186,6 @@ public class BooklistFragment extends Fragment {
         });
         requestQueue.add(booksObjReq);
     }
-
-    String bookID;
-    Book book;
 
     ItemTouchHelper.SimpleCallback simpleCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
@@ -196,7 +209,7 @@ public class BooklistFragment extends Fragment {
                     bookList.add(position, book);
                     idList.add(position, bookID);
                     adapter.notifyItemInserted(position);
-                    db.AddToRead(bookID, book.getBookTitle());
+                    db.undoRemove(bookID, book.getBookTitle());
                 }
             }).show();
         }
