@@ -77,6 +77,7 @@ public class BooklistAdapter extends RecyclerView.Adapter<BooklistAdapter.Bookli
                 i.putExtra("publishDate", book.getPublishDate());
                 i.putExtra("preview", book.getPreviewLink());
                 i.putExtra("pdf", book.getPdfLink());
+                i.putExtra("buy", book.getBuyLink());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 activity.startActivity(i);

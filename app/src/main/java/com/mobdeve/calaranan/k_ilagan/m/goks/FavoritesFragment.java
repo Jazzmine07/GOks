@@ -152,6 +152,16 @@ public class FavoritesFragment extends Fragment {
                         pdfLink = pdfObj.getString("acsTokenLink");
                     }
 
+                    JSONObject saleInfo = response.getJSONObject("saleInfo");
+                    String buyLink = null;
+                    String saleability = null;
+                    Boolean onSale = false;
+                    saleability = saleInfo.optString("saleability");
+                    if (saleability.equals("FOR_SALE") || saleability.equals("FREE") || saleability.equals("FOR_PREORDER")){
+                        onSale = true;
+                        buyLink = saleInfo.getString("buyLink");
+                    }
+
                     ArrayList<String> authors = new ArrayList<>();
 
                     if (authorsList.length() != 0) {
@@ -160,7 +170,15 @@ public class FavoritesFragment extends Fragment {
                         }
                     }
 
-                    if (pdfAvailable){
+                    if (pdfAvailable && onSale) {
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, pdfLink, buyLink);
+                        bookList.add(books);
+                    }
+                    else if(onSale){
+                        Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, buyLink, onSale);
+                        bookList.add(books);
+                    }
+                    else if (pdfAvailable){
                         Book books = new Book(id, cover, bookTitle, authors, bookDesc, bookPublisher, publishDate, previewLink, pdfLink);
                         bookList.add(books);
                     }

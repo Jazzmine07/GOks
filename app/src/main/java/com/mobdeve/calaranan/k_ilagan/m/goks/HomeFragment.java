@@ -116,7 +116,6 @@ public class HomeFragment extends Fragment {
                         if (saleability.equals("FOR_SALE") || saleability.equals("FREE") || saleability.equals("FOR_PREORDER")){
                             onSale = true;
                             buyLink = saleInfo.getString("buyLink");
-                            Log.d("sale", saleability + "url: " + buyLink);
                         }
 
                         ArrayList<String> authors = new ArrayList<>();
