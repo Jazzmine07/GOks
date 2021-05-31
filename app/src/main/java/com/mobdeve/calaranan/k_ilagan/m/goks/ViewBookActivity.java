@@ -53,8 +53,6 @@ public class ViewBookActivity extends AppCompatActivity {
         previewLink = intent.getStringExtra("preview");
         pdfLink = intent.getStringExtra("pdf");
 
-        //buyLink = intent.getStringExtra("buy");
-
         // setting data to views
         Picasso.get().load(cover).resize(350, 530).into(bookCover);
         bookTitle.setText(title);
@@ -72,8 +70,6 @@ public class ViewBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ViewBookActivity.super.onBackPressed();
-//                Intent i = new Intent(ViewBookActivity.this, MainActivity.class);
-//                startActivity(i);
             }
         });
 

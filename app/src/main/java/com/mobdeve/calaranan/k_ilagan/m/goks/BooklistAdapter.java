@@ -1,9 +1,12 @@
 package com.mobdeve.calaranan.k_ilagan.m.goks;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,18 +16,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ToReadAdapter extends RecyclerView.Adapter<ToReadAdapter.ToReadViewHolder>{
+public class BooklistAdapter extends RecyclerView.Adapter<BooklistAdapter.BooklistViewHolder>{
     public ArrayList<Book> bookList;
 
-    public ToReadAdapter(ArrayList<Book> bList){
+    public BooklistAdapter(ArrayList<Book> bList){
         this.bookList = bList;
     }
 
-    public class ToReadViewHolder extends RecyclerView.ViewHolder {
+    public class BooklistViewHolder extends RecyclerView.ViewHolder {
         public TextView bookTitle, bookAuthor, bookPublisher, publishDate;
         public ImageView bookCover;
 
-        public ToReadViewHolder(@NonNull View itemView) {
+        public BooklistViewHolder(@NonNull View itemView) {
             super(itemView);
             bookCover = itemView.findViewById(R.id.picture);
             bookTitle = itemView.findViewById(R.id.title);
@@ -36,14 +39,14 @@ public class ToReadAdapter extends RecyclerView.Adapter<ToReadAdapter.ToReadView
 
     @NonNull
     @Override
-    public ToReadAdapter.ToReadViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BooklistAdapter.BooklistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_layout, parent, false);
-        ToReadAdapter.ToReadViewHolder favoriteViewHolder = new ToReadAdapter.ToReadViewHolder(view);
+        BooklistAdapter.BooklistViewHolder favoriteViewHolder = new BooklistAdapter.BooklistViewHolder(view);
         return favoriteViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ToReadAdapter.ToReadViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BooklistAdapter.BooklistViewHolder holder, int position) {
         Book book = bookList.get(position);
 
         String bookURL;

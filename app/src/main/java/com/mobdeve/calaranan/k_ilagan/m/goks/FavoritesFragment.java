@@ -188,7 +188,7 @@ public class FavoritesFragment extends Fragment {
             adapter.notifyItemRemoved(position);
             db.removeBook(bookID);
 
-            Snackbar.make(favRv, book.getBookTitle() + " deleted from favorites", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+            Snackbar.make(favRv, book.getBookTitle() + " removed from favorites", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     bookList.add(position, book);

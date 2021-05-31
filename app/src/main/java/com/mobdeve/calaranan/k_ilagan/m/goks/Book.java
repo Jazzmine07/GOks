@@ -13,7 +13,6 @@ public class Book {
 
     private String previewLink;
     private String infoLink;
-    private String buyLink;
     private String pdfLink;
 
     public Book(String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String infoLink) {
@@ -26,7 +25,6 @@ public class Book {
         this.publishDate = publishDate;
         this.previewLink = previewLink;
         this.infoLink = infoLink;
-        this.buyLink = buyLink;
     }
 
     public Book (String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookPublisher, String publishDate){

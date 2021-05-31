@@ -54,13 +54,14 @@ public class DatabaseFavorites extends SQLiteOpenHelper {
     }
 
     Cursor getFavoriteBooks(){
-        String retrieve = "SELECT * FROM " + TABLE_NAME;
+        String retrieve = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + FIELD_BOOK + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 
         if(db != null){
             cursor = db.rawQuery(retrieve, null);   // contains all data
-        } return cursor;
+        }
+        return cursor;
     }
 
     public void removeBook(String bookID){

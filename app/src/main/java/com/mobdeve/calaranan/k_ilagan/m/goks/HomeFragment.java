@@ -88,8 +88,8 @@ public class HomeFragment extends Fragment {
                     for (i = 0; i < itemsList.length(); i++) {
                         JSONObject itemsObj = itemsList.getJSONObject(i);
                         String id = itemsObj.optString("id");
-                        JSONObject volumeObj = itemsObj.getJSONObject("volumeInfo");
 
+                        JSONObject volumeObj = itemsObj.getJSONObject("volumeInfo");
                         String bookTitle = volumeObj.optString("title");
                         JSONArray authorsList = volumeObj.getJSONArray("authors");
                         String bookDesc = volumeObj.optString("description");
@@ -133,7 +133,6 @@ public class HomeFragment extends Fragment {
                         HomeAdapter adapter = new HomeAdapter(bookList, getActivity());
                         mainRv.setLayoutManager(layoutManager);
                         mainRv.setAdapter(adapter);
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

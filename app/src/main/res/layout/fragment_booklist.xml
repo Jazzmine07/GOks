@@ -63,7 +63,7 @@
                 android:drawablePadding="8dp"
                 android:ems="10"
                 android:fontFamily="@font/noto_sans"
-                android:hint="Enter title here..."
+                android:hint="Enter book title here..."
                 android:inputType="textPersonName"
                 android:maxLines="1"
                 android:padding="10dp"

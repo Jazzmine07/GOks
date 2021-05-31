@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class BooklistFragment extends Fragment {
     public View view;
     public RecyclerView wantRv;
-    ToReadAdapter adapter;
+    BooklistAdapter adapter;
     public ArrayList<Book> bookList;
     public ArrayList<String> idList;
     public ArrayList<String> searchIdList;
@@ -153,7 +153,7 @@ public class BooklistFragment extends Fragment {
                     Book books = new Book(id, cover, bookTitle, authors, bookPublisher, publishDate);
                     bookList.add(books);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    adapter = new ToReadAdapter(bookList);
+                    adapter = new BooklistAdapter(bookList);
                     wantRv.setLayoutManager(layoutManager);
                     wantRv.setAdapter(adapter);
                 } catch (JSONException e) {
@@ -190,7 +190,7 @@ public class BooklistFragment extends Fragment {
             adapter.notifyItemRemoved(position);
             db.removeBook(bookID);
 
-            Snackbar.make(wantRv, book.getBookTitle() + " deleted from booklist", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+            Snackbar.make(wantRv, book.getBookTitle() + " removed from booklist", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     bookList.add(position, book);
