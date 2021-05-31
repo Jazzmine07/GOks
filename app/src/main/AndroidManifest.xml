@@ -8,7 +8,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo_dg"
-        android:label="@string/app_name"
+        android:label="GOks | Book Library App"
         android:roundIcon="@mipmap/logo_dg"
         android:supportsRtl="true"
         android:theme="@style/Theme.GOks">

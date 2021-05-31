@@ -111,7 +111,7 @@ public class ViewBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (pdfLink == null) {
                     // below toast message is displayed when preview link is not present.
-                    Toast.makeText(ViewBookActivity.this, "There is no ACS token for this book!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewBookActivity.this, "There is no ACS token for this book!", Toast.LENGTH_SHORT).show();
                 }
                 else if(pdfLink != null) {
                     Uri uri = Uri.parse(pdfLink);
@@ -126,7 +126,7 @@ public class ViewBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (buyLink == null || buyLink.equals("NOT_FOR_SALE")) {
                     // below toast message is displayed when preview link is not present.
-                    Toast.makeText(ViewBookActivity.this, "Book is not available for sale!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ViewBookActivity.this, "Book is not available for sale!", Toast.LENGTH_SHORT).show();
                 }
                 else if(buyLink != null) {
                     Uri uri = Uri.parse(buyLink);
