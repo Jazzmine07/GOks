@@ -13,6 +13,7 @@ public class Book {
 
     private String previewLink;
     private String pdfLink;
+    private String buyLink;
 
     public Book(String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink) {
         this.bookID = bookID;
@@ -44,6 +45,31 @@ public class Book {
         this.publishDate = publishDate;
         this.previewLink = previewLink;
         this.pdfLink = pdfLink;
+    }
+
+    public Book (String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String pdfLink, String buyLink){
+        this.bookID = bookID;
+        this.bookCover = bookCover;
+        this.bookTitle = bookTitle;
+        this.authors = authors;
+        this.bookDesc = bookDesc;
+        this.bookPublisher = bookPublisher;
+        this.publishDate = publishDate;
+        this.previewLink = previewLink;
+        this.pdfLink = pdfLink;
+        this.buyLink = buyLink;
+    }
+
+    public Book(String bookID, String bookCover, String bookTitle, ArrayList<String> authors, String bookDesc, String bookPublisher, String publishDate, String previewLink, String buyLink, Boolean onSale) {
+        this.bookID = bookID;
+        this.bookCover = bookCover;
+        this.bookTitle = bookTitle;
+        this.authors = authors;
+        this.bookDesc = bookDesc;
+        this.bookPublisher = bookPublisher;
+        this.publishDate = publishDate;
+        this.previewLink = previewLink;
+        this.buyLink = buyLink;
     }
 
     public String getBookID() {
@@ -80,5 +106,9 @@ public class Book {
 
     public String getPdfLink(){
         return pdfLink;
+    }
+
+    public String getBuyLink(){
+        return buyLink;
     }
 }

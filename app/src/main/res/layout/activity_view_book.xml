@@ -176,9 +176,18 @@
                 android:id="@+id/downloadBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/light_brown"
+                android:backgroundTint="@color/yellow"
                 android:drawableLeft="@drawable/download"
                 android:text="Download ACS token for PDF"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/buyBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/red"
+                android:drawableLeft="@drawable/basket"
+                android:text="Purchase Book"
                 android:textAllCaps="false" />
 
         </LinearLayout>

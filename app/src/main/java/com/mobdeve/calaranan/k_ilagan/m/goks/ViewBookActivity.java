@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class ViewBookActivity extends AppCompatActivity {
     public ImageView bookCover, back, saveBook;
     public TextView bookTitle, bookAuthor, bookPublisher, bookDate, bookDesc;
-    public Button previewBtn, toReadBtn, downloadBtn;
+    public Button previewBtn, toReadBtn, downloadBtn, buyBtn;
 
-    public String bookID, cover, title, description, publisher, publishedDate, previewLink, pdfLink;
+    public String bookID, cover, title, description, publisher, publishedDate, previewLink, pdfLink, buyLink;
     public ArrayList<String> authors;
 
     @Override
@@ -39,6 +39,7 @@ public class ViewBookActivity extends AppCompatActivity {
         this.previewBtn = findViewById(R.id.previewBtn);
         this.toReadBtn = findViewById(R.id.toReadBtn);
         this.downloadBtn = findViewById(R.id.downloadBtn);
+        this.buyBtn = findViewById(R.id.buyBtn);
 
         Intent intent = getIntent();
         bookID = intent.getStringExtra("id");
@@ -52,6 +53,7 @@ public class ViewBookActivity extends AppCompatActivity {
         publishedDate = intent.getStringExtra("publishDate");
         previewLink = intent.getStringExtra("preview");
         pdfLink = intent.getStringExtra("pdf");
+        buyLink = intent.getStringExtra("buy");
 
         // setting data to views
         Picasso.get().load(cover).resize(350, 530).into(bookCover);
@@ -113,6 +115,21 @@ public class ViewBookActivity extends AppCompatActivity {
                 }
                 else if(pdfLink != null) {
                     Uri uri = Uri.parse(pdfLink);
+                    Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(i);
+                }
+            }
+        });
+
+        this.buyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buyLink == null || buyLink.equals("NOT_FOR_SALE")) {
+                    // below toast message is displayed when preview link is not present.
+                    Toast.makeText(ViewBookActivity.this, "Book is not available for sale!", Toast.LENGTH_LONG).show();
+                }
+                else if(buyLink != null) {
+                    Uri uri = Uri.parse(buyLink);
                     Intent i = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(i);
                 }
